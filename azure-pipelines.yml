@@ -16,32 +16,36 @@ stages:
     jobs:
       - job: InitValidatePlan
         steps:
-          - task: ms-devlabs.custom-terraform-tasks.custom-terraform-installer-task.TerraformInstaller@0
+          - task: charleszipp.azure-pipelines-tasks-terraform.azure-pipelines-tasks-terraform-installer.TerraformInstaller@0
             displayName: 'Install Terraform'
             inputs:
               terraformVersion: '$(terraformVersion)'
 
-          - task: ms-devlabs.custom-terraform-tasks.custom-terraform-release-task.TerraformTaskV2@2
+          - task: TerraformCLI@0
             displayName: 'Terraform init'
             inputs:
+              command: 'init'
+              backendType: 'azurerm'
               backendServiceArm: $(azureSubscriptionServiceConnectionName)
               backendAzureRmResourceGroupName: $(terraformStateResourceGroupName)
               backendAzureRmStorageAccountName: $(terraformStateStorageAccountName)
               backendAzureRmContainerName: $(terraformStateStorageAccountContainerName)
               backendAzureRmKey: $(terraformStateStorageAccountContainerFileName)
 
-          - task: ms-devlabs.custom-terraform-tasks.custom-terraform-release-task.TerraformTaskV2@2
+          - task: TerraformCLI@0
             displayName: 'Terraform validate'
             inputs:
-              provider: 'azurerm'
               command: 'validate'
+              backendType: 'azurerm'
+              environmentServiceName: $(azureSubscriptionServiceConnectionName)
 
-          - task: ms-devlabs.custom-terraform-tasks.custom-terraform-release-task.TerraformTaskV2@2
+          - task: TerraformCLI@0
             displayName: 'Terraform plan'
             inputs:
-              command: plan 
+              command: 'plan'
+              backendType: 'azurerm'
               commandOptions: '-out=tfplan -input=false'
-              environmentServiceNameAzureRM: $(azureSubscriptionServiceConnectionName)
+              environmentServiceName: $(azureSubscriptionServiceConnectionName)
 
           - publish: ./
             artifact: 'terraform-archive'
@@ -70,23 +74,25 @@ stages:
                     targetType: 'inline'
                     script: 'chmod -R 755 .terraform/providers/registry.terraform.io/hashicorp'
 
-                - task: ms-devlabs.custom-terraform-tasks.custom-terraform-installer-task.TerraformInstaller@0
+                - task: charleszipp.azure-pipelines-tasks-terraform.azure-pipelines-tasks-terraform-installer.TerraformInstaller@0
                   displayName: 'Install Terraform'
                   inputs:
                     terraformVersion: '$(terraformVersion)'
 
-                - task: ms-devlabs.custom-terraform-tasks.custom-terraform-release-task.TerraformTaskV2@2
+                - task: TerraformCLI@0
                   displayName: 'Terraform init'
                   inputs:
+                    command: 'init'
+                    backendType: 'azurerm'
                     backendServiceArm: $(azureSubscriptionServiceConnectionName)
                     backendAzureRmResourceGroupName: $(terraformStateResourceGroupName)
                     backendAzureRmStorageAccountName: $(terraformStateStorageAccountName)
                     backendAzureRmContainerName: $(terraformStateStorageAccountContainerName)
                     backendAzureRmKey: $(terraformStateStorageAccountContainerFileName)
 
-                - task: ms-devlabs.custom-terraform-tasks.custom-terraform-release-task.TerraformTaskV2@2
+                - task: TerraformCLI@0
                   displayName: 'Terraform apply'
                   inputs:
-                    command: apply 
-                    commandOptions: '-out=tfplan -input=false'
-                    environmentServiceNameAzureRM: $(azureSubscriptionServiceConnectionName)
+                    command: 'apply'
+                    backendType: 'azurerm'
+                    environmentServiceName: $(azureSubscriptionServiceConnectionName)
