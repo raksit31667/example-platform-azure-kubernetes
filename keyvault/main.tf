@@ -38,7 +38,7 @@ resource "azurerm_key_vault_access_policy" "aks_identity_service_principal_acces
 
 resource "azurerm_key_vault_access_policy" "current_service_principal_access_policy" {
   key_vault_id            = azurerm_key_vault.key_vault.id
-  object_id               = data.azurerm_client_config.current.object_id
+  object_id               = data.azurerm_client_config.current.service_principal_object_id
   tenant_id               = data.azurerm_client_config.current.tenant_id
   secret_permissions      = ["Get"]
   certificate_permissions = ["Get"]
