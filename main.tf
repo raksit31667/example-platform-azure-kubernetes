@@ -15,3 +15,9 @@ module "key_vault" {
   resource_group_name = azurerm_resource_group.resource_group.name
   aks_name            = "exampleplatformaks"
 }
+
+module "aks" {
+  source              = "./aks"
+  location            = azurerm_resource_group.resource_group.location
+  resource_group_name = azurerm_resource_group.resource_group.name
+}
