@@ -36,7 +36,7 @@ resource "azurerm_key_vault_access_policy" "aks_identity_service_principal_acces
   key_permissions         = ["Get"]
 }
 
-resource "azurerm_key_vault_access_policy" "current_service_principal_access_policy" {
+resource "azurerm_key_vault_access_policy" "terraform_service_principal_access_policy" {
   key_vault_id = azurerm_key_vault.key_vault.id
   object_id    = data.azurerm_client_config.current.object_id
   tenant_id    = data.azurerm_client_config.current.tenant_id
@@ -79,6 +79,12 @@ resource "azurerm_key_vault_access_policy" "current_service_principal_access_pol
     "SetIssuers",
     "DeleteIssuers"
   ]
+}
+
+resource "azurerm_role_assignment" "key_vault_terraform_service_principal_rbac" {
+  scope                = azurerm_key_vault.key_vault.id
+  role_definition_name = "Key Vault Secrets Officer"
+  principal_id         = data.azurerm_client_config.current.object_id
 }
 
 resource "azurerm_key_vault_secret" "key_vault_aks_identity_service_principal_client_id" {
