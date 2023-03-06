@@ -28,7 +28,7 @@ resource "azurerm_key_vault" "key_vault" {
 
   access_policy {
     tenant_id = data.azurerm_client_config.current.tenant_id
-    object_id = data.azurerm_client_config.current.object_id
+    object_id = azuread_service_principal.aks_identity_service_principal.object_id
 
     key_permissions = [
       "Get",
@@ -46,12 +46,12 @@ resource "azurerm_key_vault" "key_vault" {
 
 resource "azurerm_key_vault_secret" "key_vault_aks_identity_service_principal_client_id" {
   name         = "${var.aks_name}-identity-service-principal-client-id"
-  value        = azuread_application.secrets_akv_identity_app.application_id
-  key_vault_id = data.azurerm_key_vault.key_vault.id
+  value        = azuread_application.aks_identity_application.application_id
+  key_vault_id = azurerm_key_vault.key_vault.id
 }
 
-resource "azurerm_key_vault_secret" "aks_secrets_akv_password" {
+resource "azurerm_key_vault_secret" "key_vault_aks_identity_service_principal_client_password" {
   name         = "${var.aks_name}-identity-service-principal-client-password"
-  value        = azuread_service_principal_password.secrets_akv_identity_spn_password.value
-  key_vault_id = data.azurerm_key_vault.key_vault.id
+  value        = azuread_service_principal_password.aks_identity_service_principal_password.value
+  key_vault_id = azurerm_key_vault.key_vault.id
 }
