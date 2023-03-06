@@ -25,23 +25,24 @@ resource "azurerm_key_vault" "key_vault" {
   purge_protection_enabled    = false
 
   sku_name = "standard"
+}
 
-  access_policy {
-    tenant_id = data.azurerm_client_config.current.tenant_id
-    object_id = azuread_service_principal.aks_identity_service_principal.object_id
+resource "azurerm_key_vault_access_policy" "aks_identity_service_principal_access_policy" {
+  key_vault_id            = azurerm_key_vault.key_vault.id
+  object_id               = azuread_service_principal.aks_identity_service_principal.object_id
+  tenant_id               = data.azurerm_client_config.current.tenant_id
+  secret_permissions      = ["Get"]
+  certificate_permissions = ["Get"]
+  key_permissions         = ["Get"]
+}
 
-    key_permissions = [
-      "Get",
-    ]
-
-    secret_permissions = [
-      "Get",
-    ]
-
-    storage_permissions = [
-      "Get",
-    ]
-  }
+resource "azurerm_key_vault_access_policy" "current_service_principal_access_policy" {
+  key_vault_id            = azurerm_key_vault.key_vault.id
+  object_id               = data.azurerm_client_config.current.object_id
+  tenant_id               = data.azurerm_client_config.current.tenant_id
+  secret_permissions      = ["Get"]
+  certificate_permissions = ["Get"]
+  key_permissions         = ["Get"]
 }
 
 resource "azurerm_key_vault_secret" "key_vault_aks_identity_service_principal_client_id" {
