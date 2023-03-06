@@ -1,0 +1,92 @@
+trigger:
+  - main
+
+variables:
+  terraformVersion: '1.3.0'
+  azureSubscriptionServiceConnectionName: 'example-platform-azure-kubernetes'
+  terraformStateResourceGroupName: 'example-platform-tfstate'
+  terraformStateStorageAccountName: 'exampleplatformtfstate'
+  terraformStateStorageAccountContainerName: 'terraform-state'
+  terraformStateStorageAccountContainerFileName: 'terraform.tfstate'
+  deploymentEnvironment: 'Terraform'
+
+stages:
+  - stage: InitValidatePlan
+    displayName: Init, Validate and Plan
+    jobs:
+      - job: InitValidatePlan
+        steps:
+          - task: ms-devlabs.custom-terraform-tasks.custom-terraform-installer-task.TerraformInstaller@0
+            displayName: 'Install Terraform'
+            inputs:
+              terraformVersion: '$(terraformVersion)'
+
+          - task: ms-devlabs.custom-terraform-tasks.custom-terraform-release-task.TerraformTaskV2@2
+            displayName: 'Terraform init'
+            inputs:
+              backendServiceArm: $(azureSubscriptionServiceConnectionName)
+              backendAzureRmResourceGroupName: $(terraformStateResourceGroupName)
+              backendAzureRmStorageAccountName: $(terraformStateStorageAccountName)
+              backendAzureRmContainerName: $(terraformStateStorageAccountContainerName)
+              backendAzureRmKey: $(terraformStateStorageAccountContainerFileName)
+
+          - task: ms-devlabs.custom-terraform-tasks.custom-terraform-release-task.TerraformTaskV2@2
+            displayName: 'Terraform validate'
+            inputs:
+              provider: 'azurerm'
+              command: 'validate'
+
+          - task: ms-devlabs.custom-terraform-tasks.custom-terraform-release-task.TerraformTaskV2@2
+            displayName: 'Terraform plan'
+            inputs:
+              command: plan 
+              commandOptions: '-out=tfplan -input=false'
+              environmentServiceNameAzureRM: $(azureSubscriptionServiceConnectionName)
+
+          - publish: ./
+            artifact: 'terraform-archive'
+            displayName: Publish Terraform archive
+
+  - stage: Apply
+    displayName: Apply
+    jobs:
+      - deployment: Apply
+        environment: $(deploymentEnvironment)
+        strategy:
+          runOnce:
+            deploy:
+              steps:
+                - checkout: none
+
+                - task: DownloadPipelineArtifact@2
+                  displayName: Download Terraform archive
+                  inputs:
+                    artifactName: 'terraform-archive'
+                    path: $(Build.SourcesDirectory)
+
+                - task: Bash@3
+                  displayName: Grant read permission to Terraform files
+                  inputs:
+                    targetType: 'inline'
+                    script: 'chmod -R 755 .terraform/providers/registry.terraform.io/hashicorp'
+
+                - task: ms-devlabs.custom-terraform-tasks.custom-terraform-installer-task.TerraformInstaller@0
+                  displayName: 'Install Terraform'
+                  inputs:
+                    terraformVersion: '$(terraformVersion)'
+
+                - task: ms-devlabs.custom-terraform-tasks.custom-terraform-release-task.TerraformTaskV2@2
+                  displayName: 'Terraform init'
+                  inputs:
+                    backendServiceArm: $(azureSubscriptionServiceConnectionName)
+                    backendAzureRmResourceGroupName: $(terraformStateResourceGroupName)
+                    backendAzureRmStorageAccountName: $(terraformStateStorageAccountName)
+                    backendAzureRmContainerName: $(terraformStateStorageAccountContainerName)
+                    backendAzureRmKey: $(terraformStateStorageAccountContainerFileName)
+
+                - task: ms-devlabs.custom-terraform-tasks.custom-terraform-release-task.TerraformTaskV2@2
+                  displayName: 'Terraform apply'
+                  inputs:
+                    command: apply 
+                    commandOptions: '-out=tfplan -input=false'
+                    environmentServiceNameAzureRM: $(azureSubscriptionServiceConnectionName)
