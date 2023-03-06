@@ -3,7 +3,8 @@ resource "azurerm_public_ip" "aks_nat_gateway_public_ip" {
   location            = var.location
   resource_group_name = var.resource_group_name
   allocation_method   = "Static"
-  sku                 = "Basic"
+  sku                 = "Standard"
+  zones               = ["1"]
 }
 
 resource "azurerm_nat_gateway" "aks_nat_gateway" {

@@ -5,4 +5,6 @@
 - [x] New Azure service connection -> Azure Resource Manager using service principal (manual)
 - [x] Create a new resource group, with storage account
 - [x] Create ACR where AKS will pull images from
-- [ ] Create KeyVault to store AKS credentials
+- [x] Create KeyVault to store AKS credentials
+- [x] Create Azure VNet with AKS and Application gateway Subnet
+- [ ] Create NAT gateway for AKS associated with AKS subnet and public IP
