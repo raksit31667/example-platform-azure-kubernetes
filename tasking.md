@@ -1,6 +1,6 @@
 ## Tasking
 
-- [x] az ad sp create-for-rbac --role="Contributor" --scopes="/subscriptions/<SUBSCRIPTION_ID>" --name="example-platform-azure-kubernetes"
+- [x] az ad sp create-for-rbac --role="Owner" --scopes="/subscriptions/<SUBSCRIPTION_ID>" --name="example-platform-azure-kubernetes"
 - [x] In Azure AD, add an API permission `Application.ReadWrite.All` from Microsoft Graph
 - [x] New Azure service connection -> Azure Resource Manager using service principal (manual)
 - [x] Create a new resource group, with storage account
