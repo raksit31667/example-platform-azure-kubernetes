@@ -1,27 +1,3 @@
-resource "azurerm_key_vault_secret" "aks_client_key" {
-  name         = "${azurerm_kubernetes_cluster.aks.name}-client-key"
-  value        = azurerm_kubernetes_cluster.aks.kube_admin_config.0.client_key
-  key_vault_id = var.key_vault_id
-}
-
-resource "azurerm_key_vault_secret" "aks_client_certificate" {
-  name         = "${azurerm_kubernetes_cluster.aks.name}-client-certificate"
-  value        = azurerm_kubernetes_cluster.aks.kube_admin_config.0.client_certificate
-  key_vault_id = var.key_vault_id
-}
-
-resource "azurerm_key_vault_secret" "aks_cluster_ca_certificate" {
-  name         = "${azurerm_kubernetes_cluster.aks.name}-cluster-ca-certificate"
-  value        = azurerm_kubernetes_cluster.aks.kube_admin_config.0.cluster_ca_certificate
-  key_vault_id = var.key_vault_id
-}
-
-resource "azurerm_key_vault_secret" "aks_cluster_username" {
-  name         = "${azurerm_kubernetes_cluster.aks.name}-cluster-username"
-  value        = azurerm_kubernetes_cluster.aks.kube_admin_config.0.username
-  key_vault_id = var.key_vault_id
-}
-
 resource "azurerm_key_vault_secret" "aks_admin_client_key" {
   name         = "${azurerm_kubernetes_cluster.aks.name}-admin-client-key"
   value        = length(azurerm_kubernetes_cluster.aks.kube_admin_config) > 0 ? azurerm_kubernetes_cluster.aks.kube_admin_config.0.client_key : ""
