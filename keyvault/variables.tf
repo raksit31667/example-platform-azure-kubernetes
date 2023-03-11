@@ -9,8 +9,3 @@ variable "resource_group_name" {
 variable "aks_name" {
   type = string
 }
-
-variable "kubenetes_version" {
-  type    = string
-  default = "1.24.6"
-}

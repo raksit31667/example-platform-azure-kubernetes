@@ -14,6 +14,12 @@ variable "aks_name" {
   type = string
 }
 
+variable "kubenetes_version" {
+  type    = string
+  default = "1.24.6"
+}
+
+
 variable "key_vault_id" {
   type = string
 }
