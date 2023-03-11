@@ -27,7 +27,7 @@ resource "azurerm_kubernetes_cluster" "aks" {
     load_balancer_sku = "standard"
     outbound_type     = "userAssignedNATGateway"
     nat_gateway_profile {
-      idle_timeout_in_minutes = 1
+      idle_timeout_in_minutes = 4
     }
   }
 
