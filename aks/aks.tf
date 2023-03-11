@@ -82,13 +82,13 @@ resource "azurerm_role_assignment" "aks_managed_identity" {
 resource "azurerm_role_assignment" "aks_contributor" {
   scope                = azurerm_application_gateway.aks_application_gateway.id
   role_definition_name = "Contributor"
-  principal_id         = azurerm_user_assigned_identity.aks_user_identity.id
+  principal_id         = azurerm_user_assigned_identity.aks_user_identity.principal_id
 }
 
 resource "azurerm_role_assignment" "aks_resource_group_reader" {
   scope                = var.resource_group_id
   role_definition_name = "Reader"
-  principal_id         = azurerm_user_assigned_identity.aks_user_identity.id
+  principal_id         = azurerm_user_assigned_identity.aks_user_identity.principal_id
 }
 
 resource "azurerm_role_assignment" "aks_agic_reader_resourcegroup" {
