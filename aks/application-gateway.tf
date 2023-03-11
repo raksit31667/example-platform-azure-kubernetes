@@ -23,8 +23,8 @@ resource "azurerm_application_gateway" "aks_application_gateway" {
   location            = var.location
 
   sku {
-    name = "Standard_v2"
-    tier = "Standard_v2"
+    name     = "Standard_v2"
+    tier     = "Standard_v2"
     capacity = 2
   }
 
@@ -68,6 +68,13 @@ resource "azurerm_application_gateway" "aks_application_gateway" {
     http_listener_name         = local.listener_name
     backend_address_pool_name  = local.backend_address_pool_name
     backend_http_settings_name = local.http_setting_name
-    priority = 1
+    priority                   = 1
   }
+}
+
+resource "azurerm_user_assigned_identity" "aks_application_gateway_user_identity" {
+  resource_group_name = var.resource_group_name
+  location            = var.location
+
+  name = "${azurerm_application_gateway.aks_application_gateway.name}-user-assigned-identity"
 }
