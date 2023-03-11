@@ -7,4 +7,6 @@
 - [x] Create ACR where AKS will pull images from
 - [x] Create KeyVault to store AKS credentials
 - [x] Create Azure VNet with AKS and Application gateway Subnet
-- [ ] Create NAT gateway for AKS associated with AKS subnet and public IP
+- [x] Create NAT gateway for AKS associated with AKS subnet and public IP
+- [x] Create Application gateway for AKS associated with Application gateway subnet and public IP
+- [ ] Create DNS with name `raksit31667.me` and A record with Application gateway public IP
