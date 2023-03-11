@@ -28,11 +28,6 @@ resource "azurerm_application_gateway" "aks_application_gateway" {
     capacity = 2
   }
 
-  identity {
-    type         = "UserAssigned"
-    identity_ids = [azurerm_user_assigned_identity.agw_user_identity.id]
-  }
-
   gateway_ip_configuration {
     name      = "appGatewayIpConfig"
     subnet_id = azurerm_subnet.application_gateway_subnet.id
