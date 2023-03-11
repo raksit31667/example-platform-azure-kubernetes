@@ -18,10 +18,6 @@ output "kube_admin_config_ca_cert" {
   value = azurerm_kubernetes_cluster.aks.kube_admin_config[0].cluster_ca_certificate
 }
 
-output "kube_host" {
-  value = azurerm_kubernetes_cluster.aks.kube_admin_config[0].host
-}
-
 output "kube_config" {
   value     = azurerm_kubernetes_cluster.aks.kube_config_raw
   sensitive = true
