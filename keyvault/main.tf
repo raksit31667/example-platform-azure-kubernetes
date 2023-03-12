@@ -49,7 +49,8 @@ resource "azurerm_key_vault_access_policy" "terraform_service_principal_access_p
     "Delete",
     "Recover",
     "Backup",
-    "Restore"
+    "Restore",
+    "Purge"
   ]
 
   secret_permissions = [
@@ -59,7 +60,8 @@ resource "azurerm_key_vault_access_policy" "terraform_service_principal_access_p
     "Delete",
     "Recover",
     "Backup",
-    "Restore"
+    "Restore",
+    "Purge"
   ]
 
   certificate_permissions = [
@@ -77,7 +79,8 @@ resource "azurerm_key_vault_access_policy" "terraform_service_principal_access_p
     "GetIssuers",
     "ListIssuers",
     "SetIssuers",
-    "DeleteIssuers"
+    "DeleteIssuers",
+    "Purge"
   ]
 }
 
