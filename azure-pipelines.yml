@@ -9,6 +9,7 @@ variables:
   terraformStateStorageAccountContainerName: 'terraform-state'
   terraformStateStorageAccountContainerFileName: 'terraform.tfstate'
   deploymentEnvironment: 'Terraform'
+  destroyEnvironment: 'Terraform Destroy'
 
 stages:
   - stage: InitValidatePlan
@@ -96,3 +97,51 @@ stages:
                     command: 'apply'
                     backendType: 'azurerm'
                     environmentServiceName: $(azureSubscriptionServiceConnectionName)
+
+                - publish: ./
+                  artifact: 'terraform-archive'
+                  displayName: Publish Terraform archive
+
+  - stage: Destroy
+    displayName: Destroy
+    jobs:
+      - deployment: Apply
+          environment: $(destroyEnvironment)
+          strategy:
+            runOnce:
+              deploy:
+                steps:
+                  - task: DownloadPipelineArtifact@2
+                    displayName: Download Terraform archive
+                    inputs:
+                      artifactName: 'terraform-archive'
+                      path: $(Build.SourcesDirectory)
+
+                  - task: Bash@3
+                    displayName: Grant read permission to Terraform files
+                    inputs:
+                      targetType: 'inline'
+                      script: 'chmod -R 755 .terraform/providers/registry.terraform.io/hashicorp'
+
+                  - task: charleszipp.azure-pipelines-tasks-terraform.azure-pipelines-tasks-terraform-installer.TerraformInstaller@0
+                    displayName: 'Install Terraform'
+                    inputs:
+                      terraformVersion: '$(terraformVersion)'
+
+                  - task: TerraformCLI@0
+                    displayName: 'Terraform init'
+                    inputs:
+                      command: 'init'
+                      backendType: 'azurerm'
+                      backendServiceArm: $(azureSubscriptionServiceConnectionName)
+                      backendAzureRmResourceGroupName: $(terraformStateResourceGroupName)
+                      backendAzureRmStorageAccountName: $(terraformStateStorageAccountName)
+                      backendAzureRmContainerName: $(terraformStateStorageAccountContainerName)
+                      backendAzureRmKey: $(terraformStateStorageAccountContainerFileName)
+
+                  - task: TerraformCLI@0
+                    displayName: 'Terraform destroy'
+                    inputs:
+                      command: 'destroy'
+                      backendType: 'azurerm'
+                      environmentServiceName: $(azureSubscriptionServiceConnectionName)

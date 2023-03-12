@@ -12,5 +12,5 @@
 - [x] Create a new SSH key manually for AKS cluster access via Linux SSH
 - [x] Add an Azure user to KeyVault access policies
 - [x] Add public SSH key into KeyVault secret
-- [ ] Create AKS
+- [x] Create AKS
 - [ ] Create DNS with name `raksit31667.me` and A record with Application gateway public IP
