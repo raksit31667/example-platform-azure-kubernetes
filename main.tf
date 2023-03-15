@@ -24,4 +24,7 @@ module "aks" {
   aks_name            = "exampleplatformaks"
   key_vault_id        = module.key_vault.key_vault_id
   acr_id              = module.acr.acr_id
+  depends_on = [
+    module.key_vault
+  ]
 }

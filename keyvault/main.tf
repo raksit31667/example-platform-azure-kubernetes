@@ -95,7 +95,8 @@ resource "azurerm_key_vault_secret" "key_vault_aks_identity_service_principal_cl
   value        = azuread_application.aks_identity_application.application_id
   key_vault_id = azurerm_key_vault.key_vault.id
   depends_on = [
-    azurerm_role_assignment.key_vault_terraform_service_principal_rbac
+    azurerm_role_assignment.key_vault_terraform_service_principal_rbac,
+    azurerm_key_vault_access_policy.terraform_service_principal_access_policy
   ]
 }
 
@@ -104,6 +105,7 @@ resource "azurerm_key_vault_secret" "key_vault_aks_identity_service_principal_cl
   value        = azuread_service_principal_password.aks_identity_service_principal_password.value
   key_vault_id = azurerm_key_vault.key_vault.id
   depends_on = [
-    azurerm_role_assignment.key_vault_terraform_service_principal_rbac
+    azurerm_role_assignment.key_vault_terraform_service_principal_rbac,
+    azurerm_key_vault_access_policy.terraform_service_principal_access_policy
   ]
 }

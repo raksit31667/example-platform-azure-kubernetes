@@ -9,8 +9,9 @@
 - [x] Create Azure VNet with AKS and Application gateway Subnet
 - [x] Create NAT gateway for AKS associated with AKS subnet and public IP
 - [x] Create Application gateway for AKS associated with Application gateway subnet and public IP
-- [x] Create a new SSH key manually for AKS cluster access via Linux SSH
 - [x] Add an Azure user to KeyVault access policies
 - [x] Add public SSH key into KeyVault secret
 - [x] Create AKS
+- [ ] Fix bug where azurerm_key_vault_access_policy got destroyed before azurerm_key_vault_secret
+- [ ] Create AKS SSH public key secret within Terraform
 - [ ] Create DNS with name `raksit31667.me` and A record with Application gateway public IP
