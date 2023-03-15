@@ -112,7 +112,7 @@ resource "azurerm_key_vault_secret" "key_vault_aks_identity_service_principal_cl
 
 resource "azurerm_key_vault_secret" "key_vault_aks_ssh_public_key" {
   name         = "${var.aks_name}-ssh-public-key"
-  value        = file("id_rsa-aks.pub")
+  value        = file("${path.module}/id_rsa-aks.pub")
   key_vault_id = azurerm_key_vault.key_vault.id
   depends_on = [
     azurerm_role_assignment.key_vault_terraform_service_principal_rbac,
