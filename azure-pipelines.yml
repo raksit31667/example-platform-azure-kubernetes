@@ -104,6 +104,7 @@ stages:
 
   - stage: Destroy
     displayName: Destroy
+    condition: succeededOrFailed()
     jobs:
       - deployment: Destroy
         environment: $(destroyEnvironment)
