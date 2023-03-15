@@ -27,11 +27,11 @@ module "aks" {
 }
 
 module "aks_secrets" {
-  source                        = "./aks-secrets"
-  key_vault_id                  = module.key_vault.key_vault_id
-  aks_name                      = "exampleplatformaks"
-  kube_admin_config_client_cert = module.aks.kube_admin_config_client_cert
-  kube_admin_config_client_key  = module.aks.kube_admin_config_client_key
-  kube_admin_config_ca_cert     = module.aks.kube_admin_config_ca_cert
-  kube_config                   = module.aks.kube_config
+  source                  = "./aks-secrets"
+  key_vault_id            = module.key_vault.key_vault_id
+  aks_name                = "exampleplatformaks"
+  kube_config_client_cert = module.aks.kube_config_client_cert
+  kube_config_client_key  = module.aks.kube_config_client_key
+  kube_config_ca_cert     = module.aks.kube_config_ca_cert
+  kube_config             = module.aks.kube_config
 }
