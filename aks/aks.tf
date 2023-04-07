@@ -1,8 +1,3 @@
-data "azurerm_key_vault_secret" "ssh_public_key" {
-  name         = "${var.aks_name}-ssh-public-key"
-  key_vault_id = var.key_vault_id
-}
-
 resource "azurerm_kubernetes_cluster" "aks" {
   name                             = var.aks_name
   location                         = var.location

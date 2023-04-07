@@ -12,6 +12,6 @@
 - [x] Add an Azure user to KeyVault access policies
 - [x] Add public SSH key into KeyVault secret
 - [x] Create AKS
-- [ ] Fix bug where azurerm_key_vault_access_policy got destroyed before azurerm_key_vault_secret
-- [ ] Create AKS SSH public key secret within Terraform
+- [x] Fix bug where azurerm_key_vault_access_policy got destroyed before azurerm_key_vault_secret
+- [x] Create AKS SSH public key secret within Terraform
 - [ ] Create DNS with name `raksit31667.me` and A record with Application gateway public IP
