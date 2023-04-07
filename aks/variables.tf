@@ -19,11 +19,6 @@ variable "kubenetes_version" {
   default = "1.24.6"
 }
 
-
-variable "key_vault_id" {
-  type = string
-}
-
 variable "acr_id" {
   type = string
 }

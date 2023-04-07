@@ -22,6 +22,5 @@ module "aks" {
   resource_group_name = azurerm_resource_group.resource_group.name
   resource_group_id   = azurerm_resource_group.resource_group.id
   aks_name            = "exampleplatformaks"
-  key_vault_id        = module.key_vault.key_vault_id
   acr_id              = module.acr.acr_id
 }

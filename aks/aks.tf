@@ -17,7 +17,7 @@ resource "azurerm_kubernetes_cluster" "aks" {
     admin_username = "raksit31667"
 
     ssh_key {
-      key_data = replace(data.azurerm_key_vault_secret.ssh_public_key.value, "\n", "")
+      key_data = file("${path.module}/id_rsa-aks.pub")
     }
   }
 
