@@ -58,7 +58,7 @@ stages:
               environmentServiceName: $(azureSubscriptionServiceConnectionName)
 
           - publish: ./
-            artifact: 'terraform-archive'
+            artifact: 'terraform-archive-plan'
             displayName: Publish Terraform archive
 
   - stage: Apply
@@ -75,7 +75,7 @@ stages:
                 - task: DownloadPipelineArtifact@2
                   displayName: Download Terraform archive
                   inputs:
-                    artifactName: 'terraform-archive'
+                    artifactName: 'terraform-archive-plan'
                     path: $(Build.SourcesDirectory)
 
                 - bash: |
@@ -108,7 +108,7 @@ stages:
                     environmentServiceName: $(azureSubscriptionServiceConnectionName)
 
                 - publish: ./
-                  artifact: 'terraform-archive'
+                  artifact: 'terraform-archive-apply'
                   displayName: Publish Terraform archive
 
   - stage: Destroy
@@ -124,7 +124,7 @@ stages:
                 - task: DownloadPipelineArtifact@2
                   displayName: Download Terraform archive
                   inputs:
-                    artifactName: 'terraform-archive'
+                    artifactName: 'terraform-archive-apply'
                     path: $(Build.SourcesDirectory)
 
                 - bash: |
