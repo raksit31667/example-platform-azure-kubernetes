@@ -3,7 +3,7 @@ resource "azurerm_log_analytics_workspace" "log_analytics_workspace" {
   location            = var.location
   resource_group_name = var.resource_group_name
   sku                 = "PerGB2018"
-  retention_in_days   = 7
+  retention_in_days   = 30
 }
 
 resource "azurerm_container_app_environment" "aca_environment" {
