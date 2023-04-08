@@ -2,14 +2,23 @@ trigger:
   - main
 
 variables:
-  terraformVersion: '1.3.0'
-  azureSubscriptionServiceConnectionName: 'example-platform-azure-kubernetes'
-  terraformStateResourceGroupName: 'example-platform-tfstate'
-  terraformStateStorageAccountName: 'exampleplatformtfstate'
-  terraformStateStorageAccountContainerName: 'terraform-state'
-  terraformStateStorageAccountContainerFileName: 'terraform.tfstate'
-  deploymentEnvironment: 'Terraform'
-  destroyEnvironment: 'Terraform Destroy'
+  - group: Terraform
+  - name: terraformVersion
+    value: '1.3.0'
+  - name: azureSubscriptionServiceConnectionName
+    value: example-platform-azure-kubernetes
+  - name: terraformStateResourceGroupName
+    value: example-platform-tfstate
+  - name: terraformStateStorageAccountName
+    value: exampleplatformtfstate
+  - name: terraformStateStorageAccountContainerName
+    value: terraform-state
+  - name: terraformStateStorageAccountContainerFileName
+    value: terraform.tfstate
+  - name: deploymentEnvironment
+    value: Terraform
+  - name: destroyEnvironment
+    value: Terraform Destroy
 
 stages:
   - stage: InitValidatePlan
@@ -45,7 +54,7 @@ stages:
             inputs:
               command: 'plan'
               backendType: 'azurerm'
-              commandOptions: '-out=tfplan -input=false'
+              commandOptions: '-out=tfplan -input=false -var="ado_pat_secret=$(azureDevOpsPersonalAccessToken)"'
               environmentServiceName: $(azureSubscriptionServiceConnectionName)
 
           - publish: ./
@@ -95,6 +104,7 @@ stages:
                   displayName: 'Terraform apply'
                   inputs:
                     command: 'apply'
+                    commandOptions: '-var="ado_pat_secret=$(azureDevOpsPersonalAccessToken)"'
                     backendType: 'azurerm'
                     environmentServiceName: $(azureSubscriptionServiceConnectionName)
 
@@ -144,5 +154,6 @@ stages:
                   displayName: 'Terraform destroy'
                   inputs:
                     command: 'destroy'
+                    commandOptions: '-var="ado_pat_secret=$(azureDevOpsPersonalAccessToken)"'
                     backendType: 'azurerm'
                     environmentServiceName: $(azureSubscriptionServiceConnectionName)

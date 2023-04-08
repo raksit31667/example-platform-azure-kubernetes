@@ -17,3 +17,8 @@ provider "azurerm" {
 }
 
 provider "azuread" {}
+
+provider "azuredevops" {
+  org_service_url       = "https://dev.azure.com/raksitman"
+  personal_access_token = var.ado_pat_secret
+}

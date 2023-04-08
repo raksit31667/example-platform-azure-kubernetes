@@ -31,3 +31,9 @@ module "aca" {
   resource_group_name = azurerm_resource_group.resource_group.name
   acr_id              = module.acr.acr_id
 }
+
+module "ado" {
+  source               = "./ado"
+  aca_environment_id   = module.aca.aca_environment_id
+  aca_user_identity_id = module.aca.aca_user_identity_id
+}
