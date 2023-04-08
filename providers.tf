@@ -5,6 +5,13 @@ terraform {
     container_name       = "terraform-state"
     key                  = "terraform.tfstate"
   }
+
+  required_providers {
+    azuredevops = {
+      source = "microsoft/azuredevops"
+      version = ">=0.1.0"
+    }
+  }
 }
 
 provider "azurerm" {
