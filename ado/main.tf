@@ -29,6 +29,6 @@ resource "azuredevops_serviceendpoint_azurecr" "exampleplatformacr" {
   resource_group            = var.resource_group_name
   azurecr_spn_tenantid      = data.azurerm_client_config.current.tenant_id
   azurecr_name              = var.acr_name
-  azurecr_subscription_id   = data.azurerm_subscription.current_subscription.id
+  azurecr_subscription_id   = data.azurerm_subscription.current_subscription.subscription_id
   azurecr_subscription_name = data.azurerm_subscription.current_subscription.display_name
 }
