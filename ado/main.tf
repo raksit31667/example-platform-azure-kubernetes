@@ -25,7 +25,7 @@ resource "azuredevops_variable_group" "exampleplatformaca" {
 
 resource "azuredevops_serviceendpoint_azurecr" "exampleplatformacr" {
   project_id                = data.azuredevops_project.project.id
-  name                      = var.acr_name
+  service_endpoint_name     = var.acr_name
   resource_group            = var.resource_group_name
   azurecr_spn_tenantid      = data.azurerm_client_config.current.tenant_id
   azurecr_name              = var.acr_name
