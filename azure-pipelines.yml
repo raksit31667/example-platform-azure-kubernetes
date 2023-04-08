@@ -51,10 +51,13 @@ stages:
 
           - task: TerraformCLI@0
             displayName: 'Terraform plan'
+            env:
+              AZDO_ORG_SERVICE_URL: https://dev.azure.com/raksitman
+              AZDO_PERSONAL_ACCESS_TOKEN: $(azureDevOpsPersonalAccessToken)
             inputs:
               command: 'plan'
               backendType: 'azurerm'
-              commandOptions: '-out=tfplan -input=false -var="ado_pat_secret=$(azureDevOpsPersonalAccessToken)"'
+              commandOptions: '-out=tfplan -input=false'
               environmentServiceName: $(azureSubscriptionServiceConnectionName)
 
           - publish: ./
@@ -102,9 +105,11 @@ stages:
 
                 - task: TerraformCLI@0
                   displayName: 'Terraform apply'
+                  env:
+                    AZDO_ORG_SERVICE_URL: https://dev.azure.com/raksitman
+                    AZDO_PERSONAL_ACCESS_TOKEN: $(azureDevOpsPersonalAccessToken)
                   inputs:
                     command: 'apply'
-                    commandOptions: '-var="ado_pat_secret=$(azureDevOpsPersonalAccessToken)"'
                     backendType: 'azurerm'
                     environmentServiceName: $(azureSubscriptionServiceConnectionName)
 
@@ -152,8 +157,10 @@ stages:
 
                 - task: TerraformCLI@0
                   displayName: 'Terraform destroy'
+                  env:
+                    AZDO_ORG_SERVICE_URL: https://dev.azure.com/raksitman
+                    AZDO_PERSONAL_ACCESS_TOKEN: $(azureDevOpsPersonalAccessToken)
                   inputs:
                     command: 'destroy'
-                    commandOptions: '-var="ado_pat_secret=$(azureDevOpsPersonalAccessToken)"'
                     backendType: 'azurerm'
                     environmentServiceName: $(azureSubscriptionServiceConnectionName)
