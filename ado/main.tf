@@ -3,7 +3,7 @@ data "azuredevops_project" "project" {
 }
 
 resource "azuredevops_variable_group" "exampleplatformaca" {
-  project_id   = azuredevops_project.project.id
+  project_id   = data.azuredevops_project.project.id
   name         = "exampleplatformaca"
   description  = "Variable group for ACA"
   allow_access = true
