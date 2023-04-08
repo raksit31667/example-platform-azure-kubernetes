@@ -12,3 +12,16 @@ resource "azurerm_container_app_environment" "aca_environment" {
   resource_group_name        = var.resource_group_name
   log_analytics_workspace_id = azurerm_log_analytics_workspace.log_analytics_workspace.id
 }
+
+resource "azurerm_user_assigned_identity" "aca_user_identity" {
+  resource_group_name = var.resource_group_name
+  location            = var.location
+
+  name = "${azurerm_container_app_environment.aca_environment.name}-user-assigned-identity"
+}
+
+resource "azurerm_role_assignment" "aca_acr" {
+  scope                = var.acr_id
+  role_definition_name = "AcrPull"
+  principal_id         = azurerm_user_assigned_identity.aca_user_identity.principal_id
+}
