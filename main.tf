@@ -34,7 +34,9 @@ module "aca" {
 
 module "ado" {
   source               = "./ado"
+  ado_pat_secret       = var.ado_pat_secret
+  resource_group_name  = azurerm_resource_group.resource_group.name
+  acr_name             = module.acr.acr_name
   aca_environment_id   = module.aca.aca_environment_id
   aca_user_identity_id = module.aca.aca_user_identity_id
-  ado_pat_secret       = var.ado_pat_secret
 }
