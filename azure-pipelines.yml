@@ -78,11 +78,10 @@ stages:
                     artifactName: 'terraform-archive'
                     path: $(Build.SourcesDirectory)
 
-                - task: Bash@3
+                - bash: |
+                    chmod -R 755 .terraform/providers/registry.terraform.io/hashicorp
+                    chmod -R 755 .terraform/providers/registry.terraform.io/microsoft
                   displayName: Grant read permission to Terraform files
-                  inputs:
-                    targetType: 'inline'
-                    script: 'chmod -R 755 .terraform/providers/registry.terraform.io/hashicorp'
 
                 - task: charleszipp.azure-pipelines-tasks-terraform.azure-pipelines-tasks-terraform-installer.TerraformInstaller@0
                   displayName: 'Install Terraform'
@@ -128,11 +127,10 @@ stages:
                     artifactName: 'terraform-archive'
                     path: $(Build.SourcesDirectory)
 
-                - task: Bash@3
+                - bash: |
+                    chmod -R 755 .terraform/providers/registry.terraform.io/hashicorp
+                    chmod -R 755 .terraform/providers/registry.terraform.io/microsoft
                   displayName: Grant read permission to Terraform files
-                  inputs:
-                    targetType: 'inline'
-                    script: 'chmod -R 755 .terraform/providers/registry.terraform.io/hashicorp'
 
                 - task: charleszipp.azure-pipelines-tasks-terraform.azure-pipelines-tasks-terraform-installer.TerraformInstaller@0
                   displayName: 'Install Terraform'
