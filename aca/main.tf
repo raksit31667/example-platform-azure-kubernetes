@@ -25,3 +25,11 @@ resource "azurerm_role_assignment" "aca_acr" {
   role_definition_name = "AcrPull"
   principal_id         = azurerm_user_assigned_identity.aca_user_identity.principal_id
 }
+
+resource "azurerm_storage_account" "aca_terraform_storage_account" {
+  name                     = "exampleplatformacatfstate"
+  location                 = var.location
+  resource_group_name      = var.resource_group_name
+  access_tier              = "Standard"
+  account_replication_type = "LRS"
+}
