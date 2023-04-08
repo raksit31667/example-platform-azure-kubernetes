@@ -30,6 +30,6 @@ resource "azurerm_storage_account" "aca_terraform_storage_account" {
   name                     = "exampleplatformacatfstate"
   location                 = var.location
   resource_group_name      = var.resource_group_name
-  access_tier              = "Standard"
+  account_tier             = "Standard"
   account_replication_type = "LRS"
 }
