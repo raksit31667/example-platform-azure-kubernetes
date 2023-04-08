@@ -36,4 +36,5 @@ module "ado" {
   source               = "./ado"
   aca_environment_id   = module.aca.aca_environment_id
   aca_user_identity_id = module.aca.aca_user_identity_id
+  ado_pat_secret       = var.ado_pat_secret
 }
