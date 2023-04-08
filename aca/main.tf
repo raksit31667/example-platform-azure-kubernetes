@@ -26,8 +26,8 @@ resource "azurerm_role_assignment" "aca_acr" {
   principal_id         = azurerm_user_assigned_identity.aca_user_identity.principal_id
 }
 
-resource "azurerm_storage_account" "aca_terraform_storage_account" {
-  name                     = "exampleplatformacatfstate"
+resource "azurerm_storage_account" "aca_terraform_state_storage_account" {
+  name                     = "exampleplatformacastate"
   location                 = var.location
   resource_group_name      = var.resource_group_name
   account_tier             = "Standard"
