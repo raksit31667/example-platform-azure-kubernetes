@@ -15,5 +15,5 @@
 - [x] Fix bug where azurerm_key_vault_access_policy got destroyed before azurerm_key_vault_secret
 - [x] Create AKS SSH public key secret within Terraform
 - [x] Create Azure DevOps personal access token for Terraform with full access
-- [ ] Create Azure DevOps variable groups for ACA
+- [x] Create Azure DevOps variable groups for ACA
 - [ ] Create DNS with name `raksit31667.me` and A record with Application gateway public IP
