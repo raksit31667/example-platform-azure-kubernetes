@@ -33,3 +33,9 @@ resource "azurerm_storage_account" "aca_terraform_state_storage_account" {
   account_tier             = "Standard"
   account_replication_type = "LRS"
 }
+
+resource "azurerm_storage_container" "aca_terraform_state_storage_container" {
+  name                  = "terraform-state"
+  storage_account_name  = azurerm_storage_account.aca_terraform_state_storage_account.name
+  container_access_type = "container"
+}
