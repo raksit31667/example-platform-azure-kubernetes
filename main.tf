@@ -16,14 +16,14 @@ module "key_vault" {
   aks_name            = "exampleplatformaks"
 }
 
-module "aks" {
-  source              = "./aks"
-  location            = azurerm_resource_group.resource_group.location
-  resource_group_name = azurerm_resource_group.resource_group.name
-  resource_group_id   = azurerm_resource_group.resource_group.id
-  aks_name            = "exampleplatformaks"
-  acr_id              = module.acr.acr_id
-}
+# module "aks" {
+#   source              = "./aks"
+#   location            = azurerm_resource_group.resource_group.location
+#   resource_group_name = azurerm_resource_group.resource_group.name
+#   resource_group_id   = azurerm_resource_group.resource_group.id
+#   aks_name            = "exampleplatformaks"
+#   acr_id              = module.acr.acr_id
+# }
 
 module "aca" {
   source              = "./aca"
