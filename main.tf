@@ -3,6 +3,16 @@ resource "azurerm_resource_group" "resource_group" {
   name     = "example-platform-azure-kubernetes"
 }
 
+resource "azurerm_resource_group" "resource_group_prod_au" {
+  location = "Australia East"
+  name     = "example-platform-aca-prod-au"
+}
+
+resource "azurerm_resource_group" "resource_group_prod_us" {
+  location = "Central US"
+  name     = "example-platform-aca-prod-us"
+}
+
 module "acr" {
   source              = "./acr"
   location            = azurerm_resource_group.resource_group.location
@@ -26,10 +36,25 @@ module "key_vault" {
 # }
 
 module "aca" {
-  source              = "./aca"
-  location            = azurerm_resource_group.resource_group.location
-  resource_group_name = azurerm_resource_group.resource_group.name
-  acr_id              = module.acr.acr_id
+  source = "./aca"
+  resource_groups = [
+    {
+      location            = azurerm_resource_group.resource_group.location
+      resource_group_name = azurerm_resource_group.resource_group.name
+      region_code         = "sg"
+    },
+    {
+      location            = azurerm_resource_group.resource_group_prod_au.location
+      resource_group_name = azurerm_resource_group.resource_group_prod_au.name
+      region_code         = "au"
+    },
+    {
+      location            = azurerm_resource_group.resource_group_prod_us.location
+      resource_group_name = azurerm_resource_group.resource_group_prod_us.name
+      region_code         = "us"
+    }
+  ]
+  acr_id = module.acr.acr_id
 }
 
 module "ado" {

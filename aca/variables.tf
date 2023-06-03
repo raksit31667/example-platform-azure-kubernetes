@@ -1,9 +1,9 @@
-variable "location" {
-  type = string
-}
-
-variable "resource_group_name" {
-  type = string
+variable "resource_groups" {
+  type = list(object({
+    location            = string
+    resource_group_name = string
+    region_code         = string
+  }))
 }
 
 variable "acr_id" {
