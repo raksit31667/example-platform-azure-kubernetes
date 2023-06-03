@@ -7,19 +7,21 @@ data "azuredevops_project" "project" {
 }
 
 resource "azuredevops_variable_group" "exampleplatformaca" {
+  for_each = var.region_codes
+
   project_id   = data.azuredevops_project.project.id
-  name         = "exampleplatformaca"
-  description  = "Variable group for ACA"
+  name         = "exampleplatformaca${each.value}"
+  description  = "Variable group for ACA ${upper(each.value)}"
   allow_access = true
 
   variable {
     name  = "acaEnvironmentId"
-    value = var.aca_environment_id
+    value = var.aca_environment_ids[each.value]
   }
 
   variable {
     name  = "acaUserIdentityId"
-    value = var.aca_user_identity_id
+    value = var.aca_user_identity_ids[each.value]
   }
 }
 

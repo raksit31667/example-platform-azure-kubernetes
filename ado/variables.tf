@@ -11,10 +11,14 @@ variable "acr_name" {
   type = string
 }
 
-variable "aca_environment_id" {
-  type = string
+variable "region_codes" {
+  type = list(string)
 }
 
-variable "aca_user_identity_id" {
-  type = string
+variable "aca_environment_ids" {
+  type = map(any)
+}
+
+variable "aca_user_identity_ids" {
+  type = map(any)
 }
