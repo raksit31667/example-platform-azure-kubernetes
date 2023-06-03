@@ -42,15 +42,21 @@ resource "azurerm_role_assignment" "aca_acr" {
 }
 
 resource "azurerm_storage_account" "aca_terraform_state_storage_account" {
-  name                     = "exampleplatformacastate"
-  location                 = var.location
-  resource_group_name      = var.resource_group_name
+  for_each = {
+    for rg in var.resource_groups : rg.region_code => rg
+  }
+  name                     = "exampleplatformacastate${each.value.region_code}"
+  location                 = each.value.location
+  resource_group_name      = each.value.resource_group_name
   account_tier             = "Standard"
   account_replication_type = "LRS"
 }
 
 resource "azurerm_storage_container" "aca_terraform_state_storage_container" {
+  for_each = {
+    for rg in var.resource_groups : rg.region_code => rg
+  }
   name                  = "terraform-state"
-  storage_account_name  = azurerm_storage_account.aca_terraform_state_storage_account.name
+  storage_account_name  = azurerm_storage_account.aca_terraform_state_storage_account[each.value.region_code].name
   container_access_type = "container"
 }
