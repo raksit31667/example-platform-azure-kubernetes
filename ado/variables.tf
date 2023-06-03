@@ -12,7 +12,7 @@ variable "acr_name" {
 }
 
 variable "region_codes" {
-  type = list(string)
+  type = set(string)
 }
 
 variable "aca_environment_ids" {
