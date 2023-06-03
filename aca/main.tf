@@ -45,7 +45,7 @@ resource "azurerm_storage_account" "aca_terraform_state_storage_account" {
   for_each = {
     for rg in var.resource_groups : rg.region_code => rg
   }
-  name                     = "exampleplatformacastate${each.value.region_code}"
+  name                     = "exampleplatformacatf${each.value.region_code}"
   location                 = each.value.location
   resource_group_name      = each.value.resource_group_name
   account_tier             = "Standard"
