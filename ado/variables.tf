@@ -22,3 +22,11 @@ variable "aca_environment_ids" {
 variable "aca_user_identity_ids" {
   type = map(any)
 }
+
+variable "aks_name" {
+  type = string
+}
+
+variable "aks_server_url" {
+  type = string
+}
