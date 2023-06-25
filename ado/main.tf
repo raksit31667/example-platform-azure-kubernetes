@@ -35,18 +35,18 @@ resource "azuredevops_serviceendpoint_azurecr" "exampleplatformacr" {
   azurecr_subscription_name = data.azurerm_subscription.current_subscription.display_name
 }
 
-resource "azuredevops_serviceendpoint_kubernetes" "exampleplatformaks" {
-  project_id            = data.azuredevops_project.project.id
-  service_endpoint_name = var.aks_name
-  apiserver_url         = "https://${var.aks_server_url}"
-  authorization_type    = "AzureSubscription"
+# resource "azuredevops_serviceendpoint_kubernetes" "exampleplatformaks" {
+#   project_id            = data.azuredevops_project.project.id
+#   service_endpoint_name = var.aks_name
+#   apiserver_url         = "https://${var.aks_server_url}"
+#   authorization_type    = "AzureSubscription"
 
-  azure_subscription {
-    subscription_id   = data.azurerm_subscription.current_subscription.subscription_id
-    subscription_name = data.azurerm_subscription.current_subscription.display_name
-    tenant_id         = data.azurerm_client_config.current.tenant_id
-    resourcegroup_id  = var.resource_group_name
-    namespace         = "default"
-    cluster_name      = var.aks_name
-  }
-}
+#   azure_subscription {
+#     subscription_id   = data.azurerm_subscription.current_subscription.subscription_id
+#     subscription_name = data.azurerm_subscription.current_subscription.display_name
+#     tenant_id         = data.azurerm_client_config.current.tenant_id
+#     resourcegroup_id  = var.resource_group_name
+#     namespace         = "default"
+#     cluster_name      = var.aks_name
+#   }
+# }
