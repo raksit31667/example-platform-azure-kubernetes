@@ -97,6 +97,12 @@ resource "azurerm_role_assignment" "aks_agic_contributor" {
   principal_id         = azurerm_kubernetes_cluster.aks.ingress_application_gateway[0].ingress_application_gateway_identity[0].object_id
 }
 
+resource "azurerm_role_assignment" "aks_agic_network_contributor" {
+  scope                = azurerm_subnet.application_gateway_subnet.id
+  role_definition_name = "Network Contributor"
+  principal_id         = azurerm_kubernetes_cluster.aks.ingress_application_gateway[0].ingress_application_gateway_identity[0].object_id
+}
+
 resource "azurerm_role_assignment" "aks_agic_user_assigned_identity" {
   scope                = azurerm_user_assigned_identity.aks_application_gateway_user_identity.id
   role_definition_name = "Managed Identity Operator"
