@@ -26,14 +26,14 @@ module "key_vault" {
   aks_name            = "exampleplatformaks"
 }
 
-# module "aks" {
-#   source              = "./aks"
-#   location            = azurerm_resource_group.resource_group.location
-#   resource_group_name = azurerm_resource_group.resource_group.name
-#   resource_group_id   = azurerm_resource_group.resource_group.id
-#   aks_name            = "exampleplatformaks"
-#   acr_id              = module.acr.acr_id
-# }
+module "aks" {
+  source              = "./aks"
+  location            = azurerm_resource_group.resource_group.location
+  resource_group_name = azurerm_resource_group.resource_group.name
+  resource_group_id   = azurerm_resource_group.resource_group.id
+  aks_name            = "exampleplatformaks"
+  acr_id              = module.acr.acr_id
+}
 
 module "aca" {
   source = "./aca"
@@ -65,6 +65,6 @@ module "ado" {
   region_codes          = ["sg", "au", "us"]
   aca_environment_ids   = module.aca.aca_environment_ids
   aca_user_identity_ids = module.aca.aca_user_identity_ids
-  # aks_name              = "exampleplatformaks"
-  # aks_server_url        = module.aks.fqdn
+  aks_name              = "exampleplatformaks"
+  aks_server_url        = module.aks.fqdn
 }
