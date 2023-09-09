@@ -16,7 +16,7 @@ variable "aks_name" {
 
 variable "kubenetes_version" {
   type    = string
-  default = "1.26.0"
+  default = "1.27.3"
 }
 
 variable "acr_id" {
